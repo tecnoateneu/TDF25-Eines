@@ -1,0 +1,5 @@
+{
+    "editor.tabSize": 8,
+    "python.defaultInterpreterPath": "${workspaceFolder}/env311/bin/python3.11", 
+    "python.pythonPath": "${workspaceFolder}/env311/bin/python3.11"
+}

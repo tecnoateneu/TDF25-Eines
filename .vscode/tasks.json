@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Create venv",
+            "type": "shell",
+            "command": "python3.11 -m venv env311",
+            "presentation": {
+                "reveal": "always"
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            "label": "Activate venv",
+            "type": "shell",
+            "command": "source env311/bin/activate &&pip install --upgrade pip && pip install -r .vscode/requirements.txt",
+            "dependsOn": "Create venv",
+            "presentation": {
+                "reveal": "always"
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        }
+    ]
+}
