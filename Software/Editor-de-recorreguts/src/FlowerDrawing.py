@@ -1,8 +1,9 @@
-# Creation date: 2020-04-20
-# Last modified: 2020-04-20
-# Creator: Robert Guzman
-# Description:
-#Software for reading a GCODE file and displaying it on the screen
+# Description: 
+# From a svg file, this software extracts the paths and assign them to the movement of a flower. Every path is a flower.
+# It also reads a speed file and assigns the speed to the flower's movement.
+# The software can be run in two modes:
+#  - Animation: It draws a screen with all the flowers moving according to the list of points
+#  - Export: It extracts the gcode data and exports it into a file
 
 #Import libraries
 import pygame
@@ -93,6 +94,11 @@ def read_svg_file(file_path):
 
     return flower_movements
 
+# Adds speed data to gcode_data from a speed file
+# Input: file_path: path to the speed file
+#        gcode_data: list of lists containing gcode data
+# Output: None, but gcode_data is modified to include speed data
+# Exceptions: FileNotFoundError if the speed file cannot be found
 def add_timing_data(file_path, gcode_data):
     try:
         with open(file_path, 'r') as file:
@@ -220,7 +226,7 @@ def animate_gcode(gcode_data):
         def __init__(self, flower_number):
             super(Flower_sprite, self).__init__()
             # Image name
-            image_name = "Eines/Editor-de-recorreguts/data/Sprites/Flower" + str(flower_number) + ".png"
+            image_name = "Software/Editor-de-recorreguts/data/Sprites/Flower" + str(flower_number) + ".png"
             self.surf = pygame.image.load(image_name).convert_alpha()
             self.surf = pygame.transform.scale(self.surf, (X_SPRITE_SIZE, Y_SPRITE_SIZE)) #Scale the image
             self.surf.set_colorkey((255, 255, 255), pygame.locals.RLEACCEL)
@@ -325,6 +331,10 @@ def animate_gcode(gcode_data):
     # Done! Time to quit.
     pygame.quit()
 
+# Extracts the gcode data and exports it into a file
+# Input: gcode_data: list of gcode instructions
+# Output: None, but a file is created with the exported gcode data
+# Exceptions: FileNotFoundError if the file cannot be created
 def export_gcode(gcode_data):
     if not gcode_data:
         print("export_gcode: No points to export.")
@@ -359,9 +369,9 @@ def export_gcode(gcode_data):
 #Main function
 def main():
     #dots_gcode = read_gcode_file("gcode/"+file)
-    dots_svg = read_svg_file("Eines/Editor-de-recorreguts/data/Coreografies/" + path_file + ".svg")
-    points_analytics(dots_svg)
-    add_timing_data("Eines/Editor-de-recorreguts/data/Coreografies/" + path_file + ".spd", dots_svg)
+    dots_svg = read_svg_file("Software/Editor-de-recorreguts/data/Coreografies/" + path_file + ".svg") #Read the SVG file and store the data in dots_svg
+    points_analytics(dots_svg) #Print the number of flowers and the max and min values of F, X and Y, just for debugging
+    add_timing_data("Software/Editor-de-recorreguts/data/Coreografies/" + path_file + ".spd", dots_svg) #Add speed data to dots_svg
     animate_gcode(dots_svg)
     export_gcode(dots_svg)
 
