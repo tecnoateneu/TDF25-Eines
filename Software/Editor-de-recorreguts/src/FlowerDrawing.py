@@ -341,26 +341,32 @@ def export_gcode(gcode_data):
         return
     
     data_file = []
+    flower_number = 0
 
-    first_coordinates_found = False
-    for line in gcode_data:
-        if line.startswith("F"):
-            F = int(line[1:].split(" ")[0])
-        if line.startswith("X"):
-            if not first_coordinates_found:
-                x = float(line.split('X')[1].split(' ')[0])
-                y = float(line.split('Y')[1].split(' ')[0])
-                first_coordinates_found = True
-            else:
-                dx = float(line.split('X')[1].split(' ')[0]) - x
-                dy = float(line.split('Y')[1].split(' ')[0]) - y
-                x = float(line.split('X')[1].split(' ')[0])
-                y = float(line.split('Y')[1].split(' ')[0])
-                data_file.append(str(dx) + "," + str(dy))
+    for flower_movement in gcode_data:   #We extract every flower movement
+
+        data_file.append('Flor ' + str(flower_number))
+        flower_number += 1
+        
+        first_coordinates_found = False
+        for line in flower_movement:
+            if line.startswith("F"):
+                F = int(line[1:].split(" ")[0])
+            if line.startswith("X"):
+                if not first_coordinates_found:
+                    x = float(line.split('X')[1].split(' ')[0])
+                    y = float(line.split('Y')[1].split(' ')[0])
+                    first_coordinates_found = True
+                else:
+                    dx = float(line.split('X')[1].split(' ')[0]) - x
+                    dy = float(line.split('Y')[1].split(' ')[0]) - y
+                    x = float(line.split('X')[1].split(' ')[0])
+                    y = float(line.split('Y')[1].split(' ')[0])
+                    data_file.append(str(dx) + "," + str(dy))
 
     #Create a file with the same name and add _export
     try:
-        with open(export_file, 'w') as file:
+        with open("Software/Editor-de-recorreguts/data/" + export_file, 'w') as file:
             for line in data_file:
                 file.write(line + "\n")
     except FileNotFoundError:
