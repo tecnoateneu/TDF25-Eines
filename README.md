@@ -1,5 +1,5 @@
 # TDF25-Eines
-Repositori del projecte "La dansa dels testos" on hi ha les eines de software que es fan servir per aquest projecte.
+Repositori del projecte "La dansa dels testos" (https://github.com/tecnoateneu/La-dansa-dels-testos) on hi ha les eines de software que es fan servir per aquest projecte.
 
 ### FlowerDrawing.py: 
 A partir d'un fitxer svg, genera els moviments de vàreis flors.
